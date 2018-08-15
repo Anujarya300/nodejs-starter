@@ -2,8 +2,7 @@ import * as bodyParser from 'body-parser';
 import * as errorHandler from 'errorhandler';
 import * as express from 'express';
 import * as path from 'path';
-
-import { ApiRoutes } from './routes/index.route';
+import { ApiRoutes } from './index.route';
 
 /**
  * The server.

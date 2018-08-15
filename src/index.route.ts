@@ -1,15 +1,15 @@
-import { logger } from '../services';
+import { logger } from './services';
 import { NextFunction, Request, Response } from 'express';
-import { BaseRoute } from './base.route';
-import { HomeRoute } from './home.route';
-import { HTTPResponse } from '../utils/httpResponse';
+import * as routes from './routes';
+import { HTTPResponse } from './utils/httpResponse';
+import config from './envConfig';
 
 /**
  * / route
  *
  * @class ApiRoutes
  */
-export class ApiRoutes extends BaseRoute {
+export class ApiRoutes extends routes.BaseRoute {
   public static path = '/api';
   private static instance: ApiRoutes;
 
@@ -42,10 +42,17 @@ export class ApiRoutes extends BaseRoute {
   private init() {
     // log
     logger.info('[ApiRoute] Creating api routes.');
+    logger.info(config.env);
 
     // add index page route
     this.router.get('/', this.get);
-    this.router.use(HomeRoute.path, HomeRoute.router);
+    let apiRoutes = routes;
+    
+    // add all custom page routes
+    for (let index in apiRoutes) {
+      let routeInstance: routes.BaseRoute = new apiRoutes[index]();
+      this.router.use(routeInstance.path, routeInstance.getRouter);
+    }
   }
 
   /**

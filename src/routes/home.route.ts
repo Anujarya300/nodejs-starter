@@ -12,8 +12,7 @@ import { HomeService } from '../services/home.service';
  * @apiSuccess {String} type Json Type.
  */
 export class HomeRoute extends BaseRoute {
-  public static path = '/home';
-  private static instance: HomeRoute;
+  public path = '/home';
 
   /**
    * @class HomeRoute
@@ -22,20 +21,13 @@ export class HomeRoute extends BaseRoute {
   private constructor() {
     super();
     this.getHome = this.getHome.bind(this);
+    this.getFamily = this.getFamily.bind(this);
     this.init();
-  }
-
-  static get router() {
-    if (!HomeRoute.instance) {
-      HomeRoute.instance = new HomeRoute();
-    }
-    return HomeRoute.instance.router;
   }
 
   private init() {
     // log
     logger.info('[HomeRoute] Creating Home route.');
-
     this.router.get('/', this.getHome);
     this.router.get('/family', this.getFamily);
   }
@@ -54,7 +46,7 @@ export class HomeRoute extends BaseRoute {
 
   /**
    * @class HomeRoute
-   * @method getHome
+   * @method getFamily
    * @param req {Request} The express Request object.
    * @param res {Response} The express Response object.
    * @param next {NextFunction} Execute the next method.

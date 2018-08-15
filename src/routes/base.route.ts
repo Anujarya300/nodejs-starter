@@ -11,6 +11,11 @@ export abstract class BaseRoute {
 
   protected router = Router();
   protected connection: any = {};
+  public path = '/';
+
+  public get getRouter() {
+    return this.router;
+  }
 
   public async connect (name: string): Promise<any> {
     return {};
