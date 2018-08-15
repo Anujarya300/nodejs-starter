@@ -1,5 +1,6 @@
 import { logger } from './services';
 import { NextFunction, Request, Response } from 'express';
+import { BaseRoute} from './routes/base.route';
 import * as routes from './routes';
 import { HTTPResponse } from './utils/httpResponse';
 import config from './envConfig';
@@ -9,7 +10,7 @@ import config from './envConfig';
  *
  * @class ApiRoutes
  */
-export class ApiRoutes extends routes.BaseRoute {
+export class ApiRoutes extends BaseRoute {
   public static path = '/api';
   private static instance: ApiRoutes;
 
@@ -50,7 +51,7 @@ export class ApiRoutes extends routes.BaseRoute {
     
     // add all custom page routes
     for (let index in apiRoutes) {
-      let routeInstance: routes.BaseRoute = new apiRoutes[index]();
+      let routeInstance: BaseRoute = new apiRoutes[index]();
       this.router.use(routeInstance.path, routeInstance.getRouter);
     }
   }
