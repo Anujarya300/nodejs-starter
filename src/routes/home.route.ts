@@ -3,6 +3,8 @@ import { logger } from '../services';
 import { BaseRoute } from './base.route';
 import { HTTPResponse } from '../utils/httpResponse';
 import { HomeService } from '../services/home.service';
+import { route } from '../decorators/route';
+import { Router } from 'express';
 
 /**
  * @api {get} /home home request object
@@ -11,25 +13,14 @@ import { HomeService } from '../services/home.service';
  *
  * @apiSuccess {String} type Json Type.
  */
-export class HomeRoute extends BaseRoute {
-  public path = '/home';
-
+export class HomeRoute {
+  public static path = '/home';
+  public static router = Router();
   /**
    * @class HomeRoute
    * @constructor
    */
   private constructor() {
-    super();
-    this.getHome = this.getHome.bind(this);
-    this.getFamily = this.getFamily.bind(this);
-    this.init();
-  }
-
-  private init() {
-    // log
-    logger.info('[HomeRoute] Creating Home route.');
-    this.router.get('/', this.getHome);
-    this.router.get('/family', this.getFamily);
   }
 
   /**
@@ -39,10 +30,16 @@ export class HomeRoute extends BaseRoute {
    * @param res {Response} The express Response object.
    * @param next {NextFunction} Execute the next method.
    */
-  private async getHome(req: Request, res: Response, next: NextFunction) {
-    let data = HomeService.getHome();
-    HTTPResponse.send(req, res, data);
+  @route({ path: "/", method: "get" })
+  getHome() {
+    return HomeService.getHome();
   }
+
+  @route({ path: "/:id", method: "get" })
+  getHomeById(id: number) {
+    return { id };
+  }
+
 
   /**
    * @class HomeRoute
@@ -51,9 +48,9 @@ export class HomeRoute extends BaseRoute {
    * @param res {Response} The express Response object.
    * @param next {NextFunction} Execute the next method.
    */
+  @route({ path: "/family", method: "get" })
   private async getFamily(req: Request, res: Response, next: NextFunction) {
-    let data = HomeService.getFamily();
-    HTTPResponse.send(req, res, data);
+    return HomeService.getFamily();
   }
 
 }
