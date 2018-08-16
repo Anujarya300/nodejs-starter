@@ -13,6 +13,7 @@
   "author": "Helmuth Saatkamp",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
@@ -21,11 +22,11 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "express-status-monitor": "^1.0.1",
+    "get-env": "0.5.10",
     "joi": "^13.4.0",
     "lodash": "^4.17.10",
-    "winston": "^3.0.0",
-    "get-env": "0.5.10",
-    "q": "1.5.1"
+    "q": "1.5.1",
+    "winston": "^3.0.0"
   },
   "devDependencies": {
     "@reactivex/rxjs": "^6.2.1",
@@ -40,6 +41,7 @@
     "@types/node": "^10.3.2",
     "@types/supertest": "^2.0.4",
     "@types/q": "1.5.0",
+    "@types/axios": "0.14.0",
     "cross-env": "^5.1.6",
     "ts-jest": "^22.4.6",
     "ts-loader": "^4.4.1",

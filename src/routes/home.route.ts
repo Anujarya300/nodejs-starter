@@ -3,6 +3,7 @@ import { logger } from '../services';
 import { BaseRoute } from './base.route';
 import { HTTPResponse } from '../utils/httpResponse';
 import { HomeService } from '../services/home.service';
+import { BankNodeMS } from '../services/bankNodeMicroService';
 
 /**
  * @api {get} /home home request object
@@ -13,7 +14,7 @@ import { HomeService } from '../services/home.service';
  */
 export class HomeRoute extends BaseRoute {
   public path = '/home';
-
+  private bankNodeMS: BankNodeMS;
   /**
    * @class HomeRoute
    * @constructor
@@ -22,6 +23,7 @@ export class HomeRoute extends BaseRoute {
     super();
     this.getHome = this.getHome.bind(this);
     this.getFamily = this.getFamily.bind(this);
+    this.bankNodeMS = new BankNodeMS();
     this.init();
   }
 
@@ -41,7 +43,11 @@ export class HomeRoute extends BaseRoute {
    */
   private async getHome(req: Request, res: Response, next: NextFunction) {
     let data = HomeService.getHome();
-    HTTPResponse.send(req, res, data);
+    this.bankNodeMS.getData().then(result => {
+      HTTPResponse.send(req, res, data);
+    }).catch(errMsg => {
+      HTTPResponse.sendError(req, res, errMsg);
+    })
   }
 
   /**

@@ -15,8 +15,9 @@ export const dbg = debug('express:server');
 export const logger = winston.createLogger({
   exitOnError: false,
   format: winston.format.combine(
-    winston.format.splat(),
-    winston.format.simple(),
+    winston.format.label({ label: 'Sawtooth wrapper api Logger' }),
+    winston.format.timestamp(),
+    winston.format.prettyPrint()
   ),
   transports: [
     new winston.transports.File({
