@@ -3,5 +3,4 @@ import { IError } from "../interfaces/error";
 
 export interface IMicroService {
     provider: MicroServiceEnum;
-    buildErrorMsg: (exc: any) => IError;
 }

@@ -3,6 +3,7 @@ import * as utils from './commonHelpers';
 import Q = require('q');
 import { MicroServiceEnum } from './enums';
 import { IError } from '../interfaces/error';
+import errorMsgConfig from './errorMsgConfig';
 
 export class HTTPResponse {
 
@@ -11,20 +12,23 @@ export class HTTPResponse {
             return (<Q.Promise<any>>resData).then(result => {
                 return res.status(statusCode).send(resData);
             }).catch(exc => {
-                this.sendError(req, res, this.buildErrorMsg(MicroServiceEnum.SAWTOOTH_CLIENT, exc));
+                this.sendError(req, res, this.buildErrorMsg(500, MicroServiceEnum.SAWTOOTH_CLIENT));
             })
         }
         res.status(statusCode).send(resData);
     }
 
-    static sendError(req: Request, res: Response, error: any, statusCode: number = 500) {
+    static sendError(req: Request, res: Response, error: IError, statusCode: number = 500) {
         res.status(statusCode).send(error);
     }
 
-    static buildErrorMsg(provider: MicroServiceEnum, error: any, errorCode?: number) {
+    static buildErrorMsg(errorCode: any, provider?: MicroServiceEnum): IError {
+        provider = provider || MicroServiceEnum.SAWTOOTH_CLIENT;
+        let errorConfig = errorMsgConfig[provider];
+        let errMsg = errorConfig[errorCode];
         let errorObj: IError = {
             errorCode,
-            error,
+            error: errMsg,
             originatedFrom: MicroServiceEnum[provider]
         };
         return errorObj;

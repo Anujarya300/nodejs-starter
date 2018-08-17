@@ -9,6 +9,6 @@ export class HomeService {
     }
 
     public static getFamily() {
-        return {members: 3}
+        return { members: 3 }
     }
 }

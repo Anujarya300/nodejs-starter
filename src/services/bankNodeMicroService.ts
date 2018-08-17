@@ -13,13 +13,7 @@ export class BankNodeMS implements IMicroService {
         return axios.get("http://localhost:2000/api/data").then(result => {
             return result;
         }).catch(exc => {
-            return Q.reject(this.buildErrorMsg(exc));
+            return Q.reject(HTTPResponse.buildErrorMsg(exc.code));
         })
-    }
-
-    public buildErrorMsg(exc: any) {
-        let errorConfig = errorMsgConfig[this.provider];
-        let errMsg = errorConfig[exc.code];
-        return HTTPResponse.buildErrorMsg(this.provider, errMsg, exc.code);
     }
 }

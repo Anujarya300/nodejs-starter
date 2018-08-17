@@ -4,6 +4,7 @@ import { BaseRoute } from './base.route';
 import { HTTPResponse } from '../utils/httpResponse';
 import { HomeService } from '../services/home.service';
 import { BankNodeMS } from '../services/bankNodeMicroService';
+import { IError } from '../interfaces/error';
 
 /**
  * @api {get} /home home request object
@@ -45,7 +46,7 @@ export class HomeRoute extends BaseRoute {
     let data = HomeService.getHome();
     this.bankNodeMS.getData().then(result => {
       HTTPResponse.send(req, res, data);
-    }).catch(errMsg => {
+    }).catch((errMsg: IError) => {
       HTTPResponse.sendError(req, res, errMsg);
     })
   }
