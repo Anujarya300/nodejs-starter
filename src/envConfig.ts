@@ -14,10 +14,9 @@ export type configType = {
     version?: string
 };
 
-const baseConfig = require("../config/baseConfig.json");
-const overridingConfig = require(`../config/${env}Config`);
-
-const config: configType = baseConfig;
+const baseConfig = require("./config/baseConfig").baseConfig;
+const overridingConfig = require(`./config/${env}Config`)[`${env}Config`];
+const config: Partial<configType> = baseConfig;
 Object.assign(config, baseConfig, overridingConfig);
 config.env = env;
 
