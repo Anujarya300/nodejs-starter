@@ -1,4 +1,5 @@
 # nodejs-starter
+A nodejs based web server starter project.
 
 Getting Started
 =========
