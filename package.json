@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
+     "build": "tsc",
     "start": "node dist/index.js",
     "prod": "cross-env NODE_ENV=production && node dist/index.js",
     "clean": "npm cache clear && rimraf -- dist"
